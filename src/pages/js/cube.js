@@ -1,4 +1,4 @@
-import { CUBES, CUBES_LENGTH, STACK_WIDTH, STACK_HEIGHT } from 'const';
+import { CUBES, CUBES_LENGTH, STACK_WIDTH, STACK_HEIGHT } from './const';
 
 var random = (max) => Math.floor(Math.random() * max);
 var getAllShape = (type) => CUBES[type];

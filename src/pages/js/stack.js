@@ -8,7 +8,7 @@ import {
   SCORE,
   SCORE_BONUS,
   LS_HIGHEST_SCORE,
-} from 'const';
+} from './const';
 
 var undef = undefined;
 

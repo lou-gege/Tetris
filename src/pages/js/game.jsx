@@ -1,26 +1,41 @@
-import { KEY, CUBE_W, CUBE_H } from 'const';
+import React from 'react';
+
+import { KEY, CUBE_W, CUBE_H } from './const';
 // import Audio from "audio";
-import Stack from 'stack';
-import Cube from 'cube';
+import Stack from './stack';
+import Cube from './cube';
 
 var doc = document;
 
-var Game = React.createClass({
-  getInitialState() {
+class Game extends React.Component {
+  // getInitialState() {
+  //   this.stack = new Stack();
+  //   this.cube = new Cube(this.stack);
+  //   return {
+  //     die: true,
+  //     //audio: true,
+  //     isMobile: false,
+  //   };
+  // }
+
+  constructor() {
+    super();
     this.stack = new Stack();
     this.cube = new Cube(this.stack);
-    return {
+
+    this.state = {
       die: true,
-      //audio: true,
       isMobile: false,
     };
-  },
+  }
+
   updateCube() {
     this.setState({
       cube: this.cube.getCurrent(),
       nextCube: this.cube.getNext(),
     });
-  },
+  }
+
   updateStack() {
     var info = this.stack.getInfo();
     if (!this.state.die && !info.status) {
@@ -36,7 +51,8 @@ var Game = React.createClass({
       die: !info.status,
       apm: this.cube.getApm(),
     });
-  },
+  }
+
   handleAction(action) {
     switch (action) {
       case KEY.LEFT:
@@ -63,7 +79,8 @@ var Game = React.createClass({
         }
         break;
     }
-  },
+  }
+
   bindEvent() {
     if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
       this.setState({ isMobile: true });
@@ -99,7 +116,8 @@ var Game = React.createClass({
     doc.addEventListener('keydown', (e) => {
       this.handleAction(e.keyCode);
     });
-  },
+  }
+
   componentDidMount() {
     this.bindEvent();
     this.stack.onChange(this.updateStack);
@@ -107,14 +125,16 @@ var Game = React.createClass({
     //this.audio = new Audio();
 
     this.updateStack();
-  },
+  }
+
   start() {
     this.cube.clearApmRecord();
     //this.audio.playReadyGo();
     //this.audio.playBgm();
     this.stack.refresh().start();
     this.cube.create().start();
-  },
+  }
+
   // toggleAudio() {
   //   var isMute = this.state.audio;
   //   isMute ? this.audio.mute() : this.audio.unmute();
@@ -124,7 +144,8 @@ var Game = React.createClass({
   togglePause() {
     this.cube.toggleStatus();
     this.setState({ pause: !this.cube.status });
-  },
+  }
+
   render() {
     var offsetX = 0,
       offsetY = 0,
@@ -240,7 +261,7 @@ var Game = React.createClass({
         )}
       </div>
     );
-  },
-});
+  }
+}
 
 export default Game;
