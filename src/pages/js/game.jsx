@@ -22,7 +22,8 @@ class Game extends React.Component {
     super();
     this.stack = new Stack();
     this.cube = new Cube(this.stack);
-
+    console.log('here is constructor cube:', this.cube);
+    console.log('here is constructor stack:', this.stack);
     this.state = {
       die: true,
       isMobile: false,
@@ -37,6 +38,8 @@ class Game extends React.Component {
   }
 
   updateStack() {
+    console.log('here is getInfo ', this.stack.getInfo());
+
     var info = this.stack.getInfo();
     if (!this.state.die && !info.status) {
       //this.audio.stopBgm();
@@ -128,6 +131,7 @@ class Game extends React.Component {
   }
 
   start() {
+    console.log('here is start cube:', this.cube);
     this.cube.clearApmRecord();
     //this.audio.playReadyGo();
     //this.audio.playBgm();
@@ -227,10 +231,13 @@ class Game extends React.Component {
 
         <div className="t-game-control">
           <a
-            href="javascript:;"
+            // href="javascript:;"
             className="t-start"
             style={{ display: this.state.die ? 'block' : 'none' }}
-            onClick={this.start}
+            onClick={() => {
+              console.log('here is label a start this', this);
+              this.start();
+            }}
           >
             START
           </a>
@@ -250,7 +257,7 @@ class Game extends React.Component {
           </a> */}
         </div>
 
-        {this.state.isMobile && (
+        {/* {this.state.isMobile && (
           <div className="t-cube-control" ref="cubeControl">
             <a href="javascript:;" className="t-space" ref="space"></a>
             <a href="javascript:;" className="t-up" ref="up"></a>
@@ -258,7 +265,7 @@ class Game extends React.Component {
             <a href="javascript:;" className="t-down" ref="down"></a>
             <a href="javascript:;" className="t-left" ref="left"></a>
           </div>
-        )}
+        )} */}
       </div>
     );
   }
