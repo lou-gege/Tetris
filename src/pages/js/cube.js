@@ -1,9 +1,9 @@
 import { CUBES, CUBES_LENGTH, STACK_WIDTH, STACK_HEIGHT } from './const';
 
 var random = (max) => Math.floor(Math.random() * max);
-var getAllShape = (type) => CUBES[type];
-var getShape = (type, state) => getAllShape(type)[state];
-var getCenter = (cubeWidth) => Math.floor((STACK_WIDTH - cubeWidth) / 2);
+var getAllShape = (type) => CUBES[type]; //获取某一形状的全部状态
+var getShape = (type, state) => getAllShape(type)[state]; //获取某一形状的某一状态
+var getCenter = (cubeWidth) => Math.floor((STACK_WIDTH - cubeWidth) / 2); //
 var getInitPoint = (type, state) => [
   getCenter(getShape(type, state).shape[0].length),
   0,
@@ -16,12 +16,16 @@ class Cube {
     this.playTime = 0;
   }
   getNewCube() {
-    var type = random(CUBES_LENGTH);
+    var type = random(CUBES_LENGTH); //随机生成一个形状
     return {
       type: type,
-      state: random(CUBES[type].length),
+      state: random(CUBES[type].length), //形状随机生成一个状态
     };
   }
+  /*
+  type 控制形状
+  state 控制该方块的旋转状态
+  */
   create() {
     var cube = this.nextCube || this.getNewCube();
     this.type = cube.type;
@@ -57,7 +61,7 @@ class Cube {
     return this._setPoint(
       currentShape.spin[0],
       currentShape.spin[1],
-      getShape(this.type, nextState).shape,
+      getShape(this.type, nextState).shape, //旋转后方框的状态矩阵
       nextState,
     );
   }
@@ -111,7 +115,7 @@ class Cube {
     if (!this.status) {
       return this;
     }
-    shape = shape || getShape(this.type, this.state).shape;
+    shape = shape || getShape(this.type, this.state).shape; //状态矩阵
     var x = this.point[0] + offSetX;
     var y = this.point[1] + offSetY;
     var nextCube = {
