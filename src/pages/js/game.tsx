@@ -5,6 +5,8 @@ import { KEY, CUBE_W, CUBE_H } from './const';
 import Stack from './stack';
 import Cube from './cube';
 
+import styles from '../css/game.less';
+
 var doc = document;
 
 class Game extends React.Component {
@@ -165,15 +167,15 @@ class Game extends React.Component {
     }
     console.log(this.state.info && this.state.info.best);
     return (
-      <div className={'tetris' + (this.state.die ? ' die' : '')}>
-        <div className="t-stack-wrapper">
-          <div className="t-stack">
+      <div className={styles['tetris' + (this.state.die ? ' die' : '')]}>
+        <div className={styles['t-stack-wrapper']}>
+          <div className={styles['t-stack']}>
             {this.state.cube && (
-              <ins className="t-cube" style={transform}>
+              <ins className={styles['t-cube']} style={transform}>
                 {this.state.cube.shape.map((line) => (
-                  <i className="t-cube-line">
+                  <i className={styles['t-cube-line']}>
                     {line.map((c) => (
-                      <i className={'t-cube-c c' + c}></i>
+                      <i className={styles['t-cube-c c' + c]}></i>
                     ))}
                   </i>
                 ))}
@@ -181,36 +183,36 @@ class Game extends React.Component {
             )}
             {this.state.stack &&
               this.state.stack.map((line) => (
-                <i className="t-stack-line">
+                <i className={styles['t-stack-line']}>
                   {line.map((c) => (
-                    <i className={'t-stack-c c' + c}></i>
+                    <i className={styles['t-stack-c c' + c]}></i>
                   ))}
                 </i>
               ))}
           </div>
         </div>
-        <div className="t-info-wrapper">
-          <div className="t-info">
+        <div className={styles['t-info-wrapper']}>
+          <div className={styles['t-info']}>
             <h3>NEXT</h3>
-            <div className="t-info-box">
-              <ins className="t-cube">
+            <div className={styles['t-info-box']}>
+              <ins className={styles['t-cube']}>
                 {this.state.nextCube &&
                   this.state.nextCube.shape.map((line) => (
-                    <i className="t-cube-line">
+                    <i className={styles['t-cube-line']}>
                       {line.map((c) => (
-                        <i className={'t-cube-c c' + c}></i>
+                        <i className={styles['t-cube-c c' + c]}></i>
                       ))}
                     </i>
                   ))}
               </ins>
             </div>
             <h3>SCORE</h3>
-            <div className="t-info-box">
+            <div className={styles['t-info-box']}>
               {this.state.info && (
-                <ul className="t-info-score">
+                <ul className={styles['t-info-score']}>
                   <li>Lv{this.state.info.level}</li>
                   <li>
-                    <span className="v">{this.state.info.score}</span>
+                    <span className={styles['v']}>{this.state.info.score}</span>
                     <br />
                     APM: {this.state.apm || 0}
                   </li>
@@ -219,7 +221,9 @@ class Game extends React.Component {
                     Best
                   </li>
                   <li>
-                    <span className="v">{this.state.info.best.score || 0}</span>
+                    <span className={styles['v']}>
+                      {this.state.info.best.score || 0}
+                    </span>
                     <br />
                     APM: {this.state.info.best.apm || 0}
                   </li>
@@ -229,10 +233,10 @@ class Game extends React.Component {
           </div>
         </div>
 
-        <div className="t-game-control">
+        <div className={styles['t-game-control']}>
           <a
-            // href="javascript:;"
-            className="t-start"
+            href="javascript:;"
+            className={styles['t-start']}
             style={{ display: this.state.die ? 'block' : 'none' }}
             onClick={() => {
               console.log('here is label a start this', this);
@@ -244,7 +248,7 @@ class Game extends React.Component {
           {!this.state.die && (
             <a
               href="javascript:;"
-              className="t-pause"
+              className={styles['t-pause']}
               onClick={this.togglePause}
             >
               {this.state.pause ? '>' : '||'}
@@ -257,15 +261,23 @@ class Game extends React.Component {
           </a> */}
         </div>
 
-        {/* {this.state.isMobile && (
-          <div className="t-cube-control" ref="cubeControl">
-            <a href="javascript:;" className="t-space" ref="space"></a>
-            <a href="javascript:;" className="t-up" ref="up"></a>
-            <a href="javascript:;" className="t-right" ref="right"></a>
-            <a href="javascript:;" className="t-down" ref="down"></a>
-            <a href="javascript:;" className="t-left" ref="left"></a>
+        {this.state.isMobile && (
+          <div className={styles['t-cube-control']} ref="cubeControl">
+            <a
+              href="javascript:;"
+              className={styles['t-space']}
+              ref="space"
+            ></a>
+            <a href="javascript:;" className={styles['t-up']} ref="up"></a>
+            <a
+              href="javascript:;"
+              className={styles['t-right']}
+              ref="right"
+            ></a>
+            <a href="javascript:;" className={styles['t-down']} ref="down"></a>
+            <a href="javascript:;" className={styles['t-left']} ref="left"></a>
           </div>
-        )} */}
+        )}
       </div>
     );
   }
