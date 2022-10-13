@@ -1,6 +1,6 @@
 // @import './reset.less';
 // @import './game.less';
-@import './mixin.less';
+// @import './mixin.less';
 
 @t-bg: #353535;
 @t-cube-w: 16;
@@ -31,6 +31,7 @@
   display: table-cell;
   vertical-align: top;
   border: solid 10px #2f676f;
+  // border: solid 10px #000;
   border-radius: 8px;
 }
 
@@ -59,6 +60,7 @@
   display: inline-block;
   width: ~'@{t-cube-w}px';
   height: ~'@{t-cube-h}px';
+  background-color: #666;
   .cube(c1, #9bbb49, #D4E4B4, #627229, #394919, #BBD47A); //L
   .cube(c2, #10bdde, #94deef, #087384, #084252, #52cee6); //_|
   .cube(c3, #BD52D6, #DEB5EF, #733184, #422152, #CE84DE); //T

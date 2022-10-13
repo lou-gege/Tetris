@@ -5,20 +5,21 @@ import { KEY, CUBE_W, CUBE_H } from './const';
 import Stack from './stack';
 import Cube from './cube';
 
-import styles from '../css/game.less';
+// import styles from '../css/app.less';
+import '../css/app.less';
 
 var doc = document;
 
-let stackShouldUpdate = false;
-let cubeShouldUpdate = false;
+let stackShouldUpdate = 0;
+let cubeShouldUpdate = 0;
 
 export const stackUpdate = () => {
   console.log('hhh');
-  stackShouldUpdate = true;
+  stackShouldUpdate++;
   console.log('555');
 };
 export const cubeUpdate = () => {
-  cubeShouldUpdate = true;
+  cubeShouldUpdate++;
 };
 
 const Game: React.FC = () => {
@@ -242,17 +243,36 @@ const Game: React.FC = () => {
       '-webkit-transform': translate,
     };
   }
+  // setCubeState({
+  //   point: [
+  //     4,
+  //     11
+  //   ],
+  //   shape: [
+  //     [
+  //       2,
+  //       0,
+  //       0
+  //     ],
+  //     [
+  //       2,
+  //       2,
+  //       2
+  //     ]
+  //   ]
+  // });
+
   // console.log(this.state.info && this.state.info.best);
   return (
-    <div className={styles['tetris' + (die ? ' die' : '')]}>
-      <div className={styles['t-stack-wrapper']}>
-        <div className={styles['t-stack']}>
+    <div className={'tetris' + (die ? ' die' : '')}>
+      <div className="t-stack-wrapper">
+        <div className="t-stack">
           {cubeState && (
-            <ins className={styles['t-cube']} style={transform}>
+            <ins className="t-cube" style={transform}>
               {cubeState.shape.map((line) => (
-                <i className={styles['t-cube-line']}>
+                <i className="t-cube-line">
                   {line.map((c) => (
-                    <i className={styles['t-cube-c c' + c]}></i>
+                    <i className={'t-cube-c c' + c}></i>
                   ))}
                 </i>
               ))}
@@ -260,36 +280,36 @@ const Game: React.FC = () => {
           )}
           {stackState &&
             stackState.map((line) => (
-              <i className={styles['t-stack-line']}>
+              <i className="t-stack-line">
                 {line.map((c) => (
-                  <i className={styles['t-stack-c c' + c]}></i>
+                  <i className={'t-stack-c c' + c}></i>
                 ))}
               </i>
             ))}
         </div>
       </div>
-      <div className={styles['t-info-wrapper']}>
-        <div className={styles['t-info']}>
+      <div className="t-info-wrapper">
+        <div className="t-info">
           <h3>NEXT</h3>
-          <div className={styles['t-info-box']}>
-            <ins className={styles['t-cube']}>
+          <div className="t-info-box">
+            <ins className="t-cube">
               {nextCubeState &&
                 nextCubeState.shape.map((line) => (
-                  <i className={styles['t-cube-line']}>
+                  <i className="t-cube-line">
                     {line.map((c) => (
-                      <i className={styles['t-cube-c c' + c]}></i>
+                      <i className={'t-cube-c c' + c}></i>
                     ))}
                   </i>
                 ))}
             </ins>
           </div>
           <h3>SCORE</h3>
-          <div className={styles['t-info-box']}>
+          <div className="t-info-box">
             {info && (
-              <ul className={styles['t-info-score']}>
+              <ul className="t-info-score">
                 <li>Lv{info.level}</li>
                 <li>
-                  <span className={styles['v']}>{info.score}</span>
+                  <span className="v">{info.score}</span>
                   <br />
                   APM: {apm || 0}
                 </li>
@@ -298,7 +318,7 @@ const Game: React.FC = () => {
                   Best
                 </li>
                 <li>
-                  <span className={styles['v']}>{info.best.score || 0}</span>
+                  <span className="v">{info.best.score || 0}</span>
                   <br />
                   APM: {info.best.apm || 0}
                 </li>
@@ -308,40 +328,34 @@ const Game: React.FC = () => {
         </div>
       </div>
 
-      <div className={styles['t-game-control']}>
+      <div className="t-game-control">
         <a
           href="javascript:;"
-          className={styles['t-start']}
+          className="t-start"
           style={{ display: die ? 'block' : 'none' }}
-          onClick={() => {
-            start();
-          }}
+          onClick={start}
         >
           START
         </a>
         {!die && (
-          <a
-            href="javascript:;"
-            className={styles['t-pause']}
-            onClick={() => togglePause()}
-          >
+          <a href="javascript:;" className="t-pause" onClick={togglePause}>
             {pause ? '>' : '||'}
           </a>
         )}
         {/* <a href="javascript:;"
-             className={"t-audio" + (this.state.audio ? "" : " disabled")}
-             onClick={this.toggleAudio}>
-            ♪
-          </a> */}
+          className={"t-audio" + (this.state.audio ? "" : " disabled")}
+          onClick={this.toggleAudio}>
+          ♪
+        </a> */}
       </div>
 
       {isMobile && (
-        <div className={styles['t-cube-control']} ref="cubeControl">
-          <a href="javascript:;" className={styles['t-space']} ref="space"></a>
-          <a href="javascript:;" className={styles['t-up']} ref="up"></a>
-          <a href="javascript:;" className={styles['t-right']} ref="right"></a>
-          <a href="javascript:;" className={styles['t-down']} ref="down"></a>
-          <a href="javascript:;" className={styles['t-left']} ref="left"></a>
+        <div className="t-cube-control" ref="cubeControl">
+          <a href="javascript:;" className="t-space" ref="space"></a>
+          <a href="javascript:;" className="t-up" ref="up"></a>
+          <a href="javascript:;" className="t-right" ref="right"></a>
+          <a href="javascript:;" className="t-down" ref="down"></a>
+          <a href="javascript:;" className="t-left" ref="left"></a>
         </div>
       )}
     </div>

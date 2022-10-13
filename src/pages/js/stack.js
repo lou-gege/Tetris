@@ -49,8 +49,8 @@ export default class Stack {
     console.log('stack hello');
 
     this.status = true;
-    // this.fireChange();
-    stackUpdate();
+    this.fireChange();
+    // stackUpdate();
     return this;
   }
 
@@ -135,8 +135,8 @@ export default class Stack {
       this.setBest({ score: this.score, apm: apm });
     }
     // console.log('update');
-    // this.fireChange();
-    stackUpdate();
+    this.fireChange();
+    // stackUpdate();
   }
 
   getInfo() {

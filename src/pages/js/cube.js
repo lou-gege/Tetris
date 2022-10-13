@@ -37,11 +37,12 @@ class Cube {
     this.nextCube = this.getNewCube();
     this.point = getInitPoint(this.type, this.state);
     this.cubeCnt++;
-    // this.fireChange();
-    cubeUpdate();
+    this.fireChange();
+    // cubeUpdate();
     return this;
   }
   fall() {
+    console.log('falling');
     return this._setPoint(0, 1);
   }
   left() {
@@ -71,6 +72,7 @@ class Cube {
     );
   }
   start() {
+    // console.log('cube start');
     this.status = true;
     this.timer = setInterval(() => this.fall(), this.stack.speed);
     this.startApmRecord();
@@ -122,6 +124,8 @@ class Cube {
     return this;
   }
   _setPoint(offSetX, offSetY, shape, state = this.state) {
+    // console.log('_setPoint', this);
+
     if (!this.status) {
       return this;
     }
@@ -148,9 +152,10 @@ class Cube {
     } else {
       this.point = nextCube.point;
       this.state = state;
-      // this.fireChange();
-      cubeUpdate();
+      this.fireChange();
+      // cubeUpdate();
     }
+    // console.log('_setPoint', this);
 
     return this;
   }
