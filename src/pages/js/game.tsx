@@ -36,7 +36,7 @@ const Game: React.FC = () => {
   // let stack = new Stack();
   // let cube = new Cube(stack);
 
-  const [die, setDie] = useState(true);
+  const [die, setDie] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [cubeState, setCubeState] = useState(undefined);
   const [nextCubeState, setNextCubeState] = useState(undefined);
@@ -106,7 +106,7 @@ const Game: React.FC = () => {
     // console.log('this', this);
     // console.log('updateStack', arguments[0]);
 
-    let info = stack.getInfo();
+    let _info = stack.getInfo();
     // if (!this.state.die && !info.status) {
     //   //this.audio.stopBgm();
     //   //this.audio.playDie();
@@ -115,9 +115,13 @@ const Game: React.FC = () => {
     //   //this.audio.playDestroy();
     // }
     setStackState(stack.getCurrent());
-    setInfo(info);
-    setDie(!info.status);
+    setInfo(_info);
+    setDie(!_info.status);
     setApm(cube.getApm());
+
+    console.log('stack info', info);
+    console.log('updateStack info die', die);
+    console.log('!info.status', !_info.status);
 
     // this.setState({
     //   stack: this.stack.getCurrent(),
@@ -146,6 +150,8 @@ const Game: React.FC = () => {
         cube.fall();
         break;
       case KEY.SPACE:
+        console.log('KEY.SPACE die', die);
+
         if (die) {
           start();
         } else {
