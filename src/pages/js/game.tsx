@@ -65,20 +65,20 @@ const Game: React.FC = () => {
   //   };
   // }
 
-  useEffect(() => {
-    if (stackShouldUpdate) {
-      console.log('111');
-      updateStack();
-      console.log('222');
-    }
-  }, [stackShouldUpdate]);
+  // useEffect(() => {
+  //   if (stackShouldUpdate) {
+  //     console.log('111');
+  //     updateStack();
+  //     console.log('222');
+  //   }
+  // }, [stackShouldUpdate]);
 
-  useEffect(() => {
-    if (cubeShouldUpdate) {
-      // console.log('111');
-      updateCube();
-    }
-  }, [cubeShouldUpdate]);
+  // useEffect(() => {
+  //   if (cubeShouldUpdate) {
+  //     // console.log('111');
+  //     updateCube();
+  //   }
+  // }, [cubeShouldUpdate]);
 
   // useEffect(() => {
   //   updateStack();
@@ -127,8 +127,9 @@ const Game: React.FC = () => {
     // });
   };
 
-  const handleAction = (action) => {
-    switch (action) {
+  const handleAction = (e) => {
+    console.log('handleAction e', e);
+    switch (e.keyCode) {
       case KEY.LEFT:
         cube.left();
         //audio.playBtn();
@@ -145,7 +146,7 @@ const Game: React.FC = () => {
         cube.fall();
         break;
       case KEY.SPACE:
-        if (state.die) {
+        if (die) {
           start();
         } else {
           cube.bottom();
@@ -155,46 +156,46 @@ const Game: React.FC = () => {
     }
   };
 
-  // const bindEvent=()=> {
-  //   if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
-  //     setIsMobile(true);
-  //     // this.setState({ isMobile: true });
-  //     var shadow = (ele) => {
-  //       ele.classList.add('active');
-  //       setTimeout(() => ele.classList.remove('active'), 100);
-  //     };
-  //     setTimeout(() => {
-  //       FastClick.attach(this.refs.cubeControl);
-  //       this.refs.space.addEventListener('touchend', (e) => {
-  //         shadow(this.refs.space);
-  //         this.handleAction(KEY.SPACE);
-  //       });
-  //       this.refs.up.addEventListener('touchend', (e) => {
-  //         shadow(this.refs.up);
-  //         this.handleAction(KEY.UP);
-  //       });
-  //       this.refs.down.addEventListener('touchend', (e) => {
-  //         shadow(this.refs.down);
-  //         this.handleAction(KEY.DOWN);
-  //       });
-  //       this.refs.left.addEventListener('touchend', (e) => {
-  //         shadow(this.refs.left);
-  //         this.handleAction(KEY.LEFT);
-  //       });
-  //       this.refs.right.addEventListener('touchend', (e) => {
-  //         shadow(this.refs.right);
-  //         this.handleAction(KEY.RIGHT);
-  //       });
-  //     }, 500);
-  //   }
+  const bindEvent = () => {
+    // if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+    //   setIsMobile(true);
+    //   // this.setState({ isMobile: true });
+    //   var shadow = (ele) => {
+    //     ele.classList.add('active');
+    //     setTimeout(() => ele.classList.remove('active'), 100);
+    //   };
+    //   setTimeout(() => {
+    //     FastClick.attach(this.refs.cubeControl);
+    //     this.refs.space.addEventListener('touchend', (e) => {
+    //       shadow(this.refs.space);
+    //       this.handleAction(KEY.SPACE);
+    //     });
+    //     this.refs.up.addEventListener('touchend', (e) => {
+    //       shadow(this.refs.up);
+    //       this.handleAction(KEY.UP);
+    //     });
+    //     this.refs.down.addEventListener('touchend', (e) => {
+    //       shadow(this.refs.down);
+    //       this.handleAction(KEY.DOWN);
+    //     });
+    //     this.refs.left.addEventListener('touchend', (e) => {
+    //       shadow(this.refs.left);
+    //       this.handleAction(KEY.LEFT);
+    //     });
+    //     this.refs.right.addEventListener('touchend', (e) => {
+    //       shadow(this.refs.right);
+    //       this.handleAction(KEY.RIGHT);
+    //     });
+    //   }, 500);
+    // }
 
-  //   doc.addEventListener('keydown', (e) => {
-  //     this.handleAction(e.keyCode);
-  //   });
-  // }
+    doc.addEventListener('keydown', (e) => {
+      handleAction(e);
+    });
+  };
 
   useEffect(() => {
-    // bindEvent();
+    bindEvent();
     stack.onChange(updateStack);
     cube.onChange(updateCube);
 
@@ -243,24 +244,6 @@ const Game: React.FC = () => {
       '-webkit-transform': translate,
     };
   }
-  // setCubeState({
-  //   point: [
-  //     4,
-  //     11
-  //   ],
-  //   shape: [
-  //     [
-  //       2,
-  //       0,
-  //       0
-  //     ],
-  //     [
-  //       2,
-  //       2,
-  //       2
-  //     ]
-  //   ]
-  // });
 
   // console.log(this.state.info && this.state.info.best);
   return (

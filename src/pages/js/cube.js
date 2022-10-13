@@ -52,6 +52,7 @@ class Cube {
     return this._setPoint(1, 0);
   }
   bottom() {
+    console.log('bottom com in');
     if (!this.status) {
       return this;
     } else {
