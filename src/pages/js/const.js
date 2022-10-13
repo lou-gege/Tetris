@@ -2,8 +2,8 @@
 export const STACK_WIDTH = 12;
 export const STACK_HEIGHT = 21;
 //方块宽高
-export const CUBE_W = 16;
-export const CUBE_H = 16;
+export const CUBE_W = 32;
+export const CUBE_H = 32;
 //方块类型
 export const CUBES = [
   /**
@@ -199,6 +199,7 @@ export const KEY = {
   LEFT: 37,
   RIGHT: 39,
   SPACE: 32,
+  PAUSE: 80,
 };
 //连消分数
 export const SCORE = [0, 10, 30, 70, 100];

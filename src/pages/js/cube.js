@@ -1,8 +1,15 @@
 import { CUBES, CUBES_LENGTH, STACK_WIDTH, STACK_HEIGHT } from './const';
+import { cubeUpdate } from './game';
 
 var random = (max) => Math.floor(Math.random() * max);
 var getAllShape = (type) => CUBES[type];
-var getShape = (type, state) => getAllShape(type)[state];
+var getShape = (type, state) => {
+  console.log('getShape type', type);
+  console.log('getShape state', state);
+  console.log('getAllShape(type)[state]', getAllShape(type)[state]);
+
+  return getAllShape(type)[state];
+};
 var getCenter = (cubeWidth) => Math.floor((STACK_WIDTH - cubeWidth) / 2);
 var getInitPoint = (type, state) => [
   getCenter(getShape(type, state).shape[0].length),
@@ -23,6 +30,7 @@ class Cube {
     };
   }
   create() {
+    console.log('cube create');
     var cube = this.nextCube || this.getNewCube();
     this.type = cube.type;
     this.state = cube.state;
@@ -30,9 +38,11 @@ class Cube {
     this.point = getInitPoint(this.type, this.state);
     this.cubeCnt++;
     this.fireChange();
+    // cubeUpdate();
     return this;
   }
   fall() {
+    console.log('falling');
     return this._setPoint(0, 1);
   }
   left() {
@@ -42,6 +52,7 @@ class Cube {
     return this._setPoint(1, 0);
   }
   bottom() {
+    console.log('bottom com in');
     if (!this.status) {
       return this;
     } else {
@@ -62,6 +73,7 @@ class Cube {
     );
   }
   start() {
+    // console.log('cube start');
     this.status = true;
     this.timer = setInterval(() => this.fall(), this.stack.speed);
     this.startApmRecord();
@@ -101,13 +113,20 @@ class Cube {
   onChange(callback) {
     this.callbacks = this.callbacks || [];
     this.callbacks.push(callback);
+    console.log('cube onChange', this.callbacks);
+
     return this;
   }
   fireChange(data) {
+    console.log('cube fireChange', this.callbacks);
+    console.log('cube fireChange this', this);
+
     this.callbacks && this.callbacks.map((fn) => fn.apply(this, data));
     return this;
   }
   _setPoint(offSetX, offSetY, shape, state = this.state) {
+    // console.log('_setPoint', this);
+
     if (!this.status) {
       return this;
     }
@@ -135,11 +154,14 @@ class Cube {
       this.point = nextCube.point;
       this.state = state;
       this.fireChange();
+      // cubeUpdate();
     }
+    // console.log('_setPoint', this);
 
     return this;
   }
   getCurrent() {
+    console.log('getCurrent this', this);
     return {
       point: this.point,
       shape: getShape(this.type, this.state).shape,
