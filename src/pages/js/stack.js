@@ -9,6 +9,7 @@ import {
   SCORE_BONUS,
   LS_HIGHEST_SCORE,
 } from './const';
+import { stackUpdate } from './game';
 
 var undef = undefined;
 
@@ -45,8 +46,11 @@ export default class Stack {
   }
 
   start() {
+    console.log('stack hello');
+
     this.status = true;
-    this.fireChange();
+    // this.fireChange();
+    stackUpdate();
     return this;
   }
 
@@ -60,10 +64,15 @@ export default class Stack {
   }
 
   onChange(callback) {
+    console.log('stack onChange', callback);
+
     this.callbacks = this.callbacks || [];
     this.callbacks.push(callback);
+
+    console.log('stack onChange this.callbacks', this.callbacks);
   }
   fireChange(data) {
+    console.log('stack fireChange', this.callbacks);
     this.callbacks &&
       this.callbacks.map((fn) => {
         console.log('fn', fn);
@@ -125,8 +134,9 @@ export default class Stack {
     if (this.score > this.best.score) {
       this.setBest({ score: this.score, apm: apm });
     }
-
-    this.fireChange();
+    // console.log('update');
+    // this.fireChange();
+    stackUpdate();
   }
 
   getInfo() {

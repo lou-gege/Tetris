@@ -9,6 +9,18 @@ import styles from '../css/game.less';
 
 var doc = document;
 
+let stackShouldUpdate = false;
+let cubeShouldUpdate = false;
+
+export const stackUpdate = () => {
+  console.log('hhh');
+  stackShouldUpdate = true;
+  console.log('555');
+};
+export const cubeUpdate = () => {
+  cubeShouldUpdate = true;
+};
+
 const Game: React.FC = () => {
   // getInitialState() {
   //   this.stack = new Stack();
@@ -32,6 +44,11 @@ const Game: React.FC = () => {
   const [apm, setApm] = useState(undefined);
   const [pause, setPause] = useState(undefined);
 
+  console.log('stack', stack);
+  console.log('cube', cube);
+  console.log('stack.status', stack.status);
+  console.log('stackShouldUpdate', stackShouldUpdate);
+
   // constructor() {
   //   super();
   //   this.stack = new Stack();
@@ -43,9 +60,26 @@ const Game: React.FC = () => {
   //   };
   // }
 
+  useEffect(() => {
+    if (stackShouldUpdate) {
+      console.log('111');
+      updateStack();
+      console.log('222');
+    }
+  }, [stackShouldUpdate]);
+
+  useEffect(() => {
+    if (cubeShouldUpdate) {
+      // console.log('111');
+      updateCube();
+    }
+  }, [cubeShouldUpdate]);
+
   const updateCube = () => {
-    setCubeState(cube.getCurrent);
-    setNextCubeState(cube.getNext);
+    console.log('updateCube');
+
+    setCubeState(cube.getCurrent());
+    setNextCubeState(cube.getNext());
 
     // this.setState({
     //   cube: this.cube.getCurrent(),
@@ -148,8 +182,8 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     // bindEvent();
-    stack.onChange(updateStack);
-    cube.onChange(updateCube);
+    // stack.onChange(updateStack);
+    // cube.onChange(updateCube);
 
     updateStack();
   }, []);
@@ -168,6 +202,7 @@ const Game: React.FC = () => {
     //audio.playReadyGo();
     //audio.playBgm();
     stack.refresh().start();
+    updateStack();
     cube.create().start();
   };
 

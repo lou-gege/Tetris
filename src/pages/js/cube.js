@@ -1,8 +1,15 @@
 import { CUBES, CUBES_LENGTH, STACK_WIDTH, STACK_HEIGHT } from './const';
+import { cubeUpdate } from './game';
 
 var random = (max) => Math.floor(Math.random() * max);
 var getAllShape = (type) => CUBES[type];
-var getShape = (type, state) => getAllShape(type)[state];
+var getShape = (type, state) => {
+  console.log('getShape type', type);
+  console.log('getShape state', state);
+  console.log('getAllShape(type)[state]', getAllShape(type)[state]);
+
+  return getAllShape(type)[state];
+};
 var getCenter = (cubeWidth) => Math.floor((STACK_WIDTH - cubeWidth) / 2);
 var getInitPoint = (type, state) => [
   getCenter(getShape(type, state).shape[0].length),
@@ -23,13 +30,15 @@ class Cube {
     };
   }
   create() {
+    console.log('cube create');
     var cube = this.nextCube || this.getNewCube();
     this.type = cube.type;
     this.state = cube.state;
     this.nextCube = this.getNewCube();
     this.point = getInitPoint(this.type, this.state);
     this.cubeCnt++;
-    this.fireChange();
+    // this.fireChange();
+    cubeUpdate();
     return this;
   }
   fall() {
@@ -134,7 +143,8 @@ class Cube {
     } else {
       this.point = nextCube.point;
       this.state = state;
-      this.fireChange();
+      // this.fireChange();
+      cubeUpdate();
     }
 
     return this;
