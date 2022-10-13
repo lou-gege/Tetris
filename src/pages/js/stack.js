@@ -64,7 +64,13 @@ export default class Stack {
     this.callbacks.push(callback);
   }
   fireChange(data) {
-    this.callbacks && this.callbacks.map((fn) => fn.apply(this, data));
+    this.callbacks &&
+      this.callbacks.map((fn) => {
+        console.log('fn', fn);
+        console.log('callback this', this);
+
+        fn(this, data);
+      });
   }
 
   getCurrent() {
