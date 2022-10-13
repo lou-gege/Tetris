@@ -144,6 +144,7 @@ class Cube {
     return this;
   }
   getCurrent() {
+    console.log('here is getCurrent this', this);
     return {
       point: this.point,
       shape: getShape(this.type, this.state).shape,

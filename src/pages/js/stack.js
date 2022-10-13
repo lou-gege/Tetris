@@ -14,9 +14,11 @@ var undef = undefined;
 
 export default class Stack {
   constructor() {
+    this.id = Math.random();
     this.status = false;
     this.best = this.getBest();
     this.refresh();
+    this.callbacks = [];
   }
 
   refresh() {
@@ -64,7 +66,12 @@ export default class Stack {
     this.callbacks.push(callback);
   }
   fireChange(data) {
-    this.callbacks && this.callbacks.map((fn) => fn.apply(this, data));
+    console.log('here is stack fireChange callbacks', this.callbacks);
+    console.log('here is stack fireChange this', this);
+    this.callbacks &&
+      this.callbacks.map((fn) => {
+        fn(this, data);
+      });
   }
 
   getCurrent() {

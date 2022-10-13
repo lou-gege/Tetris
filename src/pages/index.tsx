@@ -1,5 +1,6 @@
 import styles from './index.less';
 import Game from './js/game';
+import './css/game.less';
 
 export default function IndexPage() {
   return (
