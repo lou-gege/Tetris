@@ -32,8 +32,8 @@ const Game: React.FC = () => {
   //   };
   // }
 
-  let stack = new Stack();
-  let cube = new Cube(stack);
+  // let stack = new Stack();
+  // let cube = new Cube(stack);
 
   const [die, setDie] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -44,10 +44,14 @@ const Game: React.FC = () => {
   const [apm, setApm] = useState(undefined);
   const [pause, setPause] = useState(undefined);
 
+  const [stack, setStack] = useState(new Stack());
+  const [cube, setCube] = useState(new Cube(stack));
+
   console.log('stack', stack);
   console.log('cube', cube);
   console.log('stack.status', stack.status);
   console.log('stackShouldUpdate', stackShouldUpdate);
+  console.log('cubeState', cubeState);
 
   // constructor() {
   //   super();
@@ -75,8 +79,16 @@ const Game: React.FC = () => {
     }
   }, [cubeShouldUpdate]);
 
+  // useEffect(() => {
+  //   updateStack();
+  // }, [stack]);
+
+  // useEffect(() => {
+  //   updateCube();
+  // }, [cube]);
+
   const updateCube = () => {
-    console.log('updateCube');
+    console.log('updateCube', cube);
 
     setCubeState(cube.getCurrent());
     setNextCubeState(cube.getNext());
@@ -182,8 +194,8 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     // bindEvent();
-    // stack.onChange(updateStack);
-    // cube.onChange(updateCube);
+    stack.onChange(updateStack);
+    cube.onChange(updateCube);
 
     updateStack();
   }, []);

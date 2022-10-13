@@ -110,9 +110,14 @@ class Cube {
   onChange(callback) {
     this.callbacks = this.callbacks || [];
     this.callbacks.push(callback);
+    console.log('cube onChange', this.callbacks);
+
     return this;
   }
   fireChange(data) {
+    console.log('cube fireChange', this.callbacks);
+    console.log('cube fireChange this', this);
+
     this.callbacks && this.callbacks.map((fn) => fn.apply(this, data));
     return this;
   }
@@ -150,6 +155,7 @@ class Cube {
     return this;
   }
   getCurrent() {
+    console.log('getCurrent this', this);
     return {
       point: this.point,
       shape: getShape(this.type, this.state).shape,
