@@ -39,6 +39,16 @@ test('test cube fall', () => {
   expect(cube.point[1]).toBe(pointOld[1] + 1);
 });
 
+test('test cube spin', () => {
+  const stack = new Stack();
+  const cube = new Cube(stack);
+  cube.create();
+  cube.status = true;
+  const oldState = cube.state;
+  cube.spin();
+  expect(cube.state).toBe((oldState + 1) % 4);
+});
+
 test('test hasCollision called when cube move', () => {
   const stack = new Stack();
   const cube = new Cube(stack);
@@ -51,4 +61,17 @@ test('test hasCollision called when cube move', () => {
   const mockStackInstance = Stack.mock.instances[0];
   const mockHasCollision = mockStackInstance.hasCollision;
   expect(mockHasCollision).toHaveBeenCalledTimes(3);
+});
+
+test('test apm', () => {
+  const stack = new Stack();
+  const cube = new Cube(stack);
+  const start = new Date('2021-12-17T03:24:00');
+  const end = new Date('2021-12-17T03:26:00');
+  const cnt = 10;
+  for (let i = 0; i < cnt; i++) {
+    cube.create();
+  }
+  cube.playTime = end.valueOf() - start.valueOf();
+  expect(cube.getApm()).toBe(Math.round(cnt / (cube.playTime / 60 / 1000)));
 });
