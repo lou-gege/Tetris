@@ -39,12 +39,12 @@ const Game: React.FC = () => {
 
   const [die, setDie] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [cubeState, setCubeState] = useState(undefined);
-  const [nextCubeState, setNextCubeState] = useState(undefined);
-  const [stackState, setStackState] = useState(undefined);
-  const [info, setInfo] = useState(undefined);
-  const [apm, setApm] = useState(undefined);
-  const [pause, setPause] = useState(false);
+  const [cubeState, setCubeState] = useState<any>(undefined);
+  const [nextCubeState, setNextCubeState] = useState<any>(undefined);
+  const [stackState, setStackState] = useState<any>(undefined);
+  const [info, setInfo] = useState<any>(undefined);
+  const [apm, setApm] = useState<any>(undefined);
+  const [pause, setPause] = useState<any>(false);
 
   const [stack, setStack] = useState(new Stack());
   const [cube, setCube] = useState(new Cube(stack));
@@ -132,7 +132,7 @@ const Game: React.FC = () => {
     // });
   };
 
-  const handleAction = (e) => {
+  const handleAction = (e: any) => {
     console.log('handleAction e', e);
     switch (e.keyCode) {
       case KEY.LEFT:
@@ -244,11 +244,11 @@ const Game: React.FC = () => {
 
   var offsetX = 0,
     offsetY = 0,
-    transform = '';
+    transform: any = '';
   if (cubeState) {
     offsetX = cubeState.point[0] * CUBE_W;
     offsetY = cubeState.point[1] * CUBE_H;
-    var translate = 'translate3d(' + offsetX + 'px, ' + offsetY + 'px, 0)';
+    var translate: any = 'translate3d(' + offsetX + 'px, ' + offsetY + 'px, 0)';
     transform = {
       transform: translate,
       '-webkit-transform': translate,
@@ -264,9 +264,9 @@ const Game: React.FC = () => {
           <div className="t-info-box">
             <ins className="t-cube">
               {nextCubeState &&
-                nextCubeState.shape.map((line) => (
+                nextCubeState.shape.map((line: any) => (
                   <i className="t-cube-line">
-                    {line.map((c) => (
+                    {line.map((c: any) => (
                       <i className={'t-cube-c c' + c}></i>
                     ))}
                   </i>
@@ -358,9 +358,9 @@ const Game: React.FC = () => {
             <div className="t-stack">
               {cubeState && (
                 <ins className="t-cube" style={transform}>
-                  {cubeState.shape.map((line) => (
+                  {cubeState.shape.map((line: any) => (
                     <i className="t-cube-line">
-                      {line.map((c) => (
+                      {line.map((c: any) => (
                         <i className={'t-cube-c c' + c}></i>
                       ))}
                     </i>
@@ -368,9 +368,9 @@ const Game: React.FC = () => {
                 </ins>
               )}
               {stackState &&
-                stackState.map((line) => (
+                stackState.map((line: any) => (
                   <i className="t-stack-line">
-                    {line.map((c) => (
+                    {line.map((c: any) => (
                       <i className={'t-stack-c c' + c}></i>
                     ))}
                   </i>
