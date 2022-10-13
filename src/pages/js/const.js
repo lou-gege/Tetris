@@ -199,6 +199,7 @@ export const KEY = {
   LEFT: 37,
   RIGHT: 39,
   SPACE: 32,
+  PAUSE: 80,
 };
 //连消分数
 export const SCORE = [0, 10, 30, 70, 100];

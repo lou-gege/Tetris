@@ -149,8 +149,11 @@ const Game: React.FC = () => {
       case KEY.DOWN:
         cube.fall();
         break;
+      case KEY.PAUSE:
+        togglePause();
+        break;
       case KEY.SPACE:
-        console.log('KEY.SPACE die', die);
+        // console.log('KEY.SPACE die', die);
 
         if (die) {
           start();
@@ -253,31 +256,50 @@ const Game: React.FC = () => {
 
   // console.log(this.state.info && this.state.info.best);
   return (
-    <div className={'tetris' + (die ? ' die' : '')}>
-      <div className="t-stack-wrapper">
-        <div className="t-stack">
-          {cubeState && (
-            <ins className="t-cube" style={transform}>
-              {cubeState.shape.map((line) => (
-                <i className="t-cube-line">
-                  {line.map((c) => (
-                    <i className={'t-cube-c c' + c}></i>
-                  ))}
-                </i>
-              ))}
-            </ins>
-          )}
-          {stackState &&
-            stackState.map((line) => (
-              <i className="t-stack-line">
-                {line.map((c) => (
-                  <i className={'t-stack-c c' + c}></i>
+    <div>
+      <div className="t-top">
+        <div className="t-info" style={{ display: 'inline-block' }}>
+          <h3>NEXT</h3>
+          <div className="t-info-box">
+            <ins className="t-cube">
+              {nextCubeState &&
+                nextCubeState.shape.map((line) => (
+                  <i className="t-cube-line">
+                    {line.map((c) => (
+                      <i className={'t-cube-c c' + c}></i>
+                    ))}
+                  </i>
                 ))}
-              </i>
-            ))}
+            </ins>
+          </div>
+        </div>
+        <div className="t-info" style={{ display: 'inline-block' }}>
+          <h3>SCORE</h3>
+          <div className="t-info-box">
+            {info && (
+              <ul className="t-info-score">
+                <li>Lv{info.level}</li>
+                <li>
+                  <span className="v">{info.score}</span>
+                  <br />
+                  APM: {apm || 0}
+                </li>
+                <li>
+                  <br />
+                  Best
+                </li>
+                <li>
+                  <span className="v">{info.best.score || 0}</span>
+                  <br />
+                  APM: {info.best.apm || 0}
+                </li>
+              </ul>
+            )}
+          </div>
         </div>
       </div>
-      <div className="t-info-wrapper">
+      <div className={'tetris' + (die ? ' die' : '')}>
+        {/* <div className="t-info-wrapper">
         <div className="t-info">
           <h3>NEXT</h3>
           <div className="t-info-box">
@@ -315,38 +337,102 @@ const Game: React.FC = () => {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="t-game-control">
-        <a
-          href="javascript:;"
-          className="t-start"
-          style={{ display: die ? 'block' : 'none' }}
-          onClick={start}
-        >
-          START
-        </a>
-        {!die && (
-          <a href="javascript:;" className="t-pause" onClick={togglePause}>
-            {pause ? '>' : '||'}
+        <div className="t-stack-wrapper">
+          <div className="t-stack">
+            {cubeState && (
+              <ins className="t-cube" style={transform}>
+                {cubeState.shape.map((line) => (
+                  <i className="t-cube-line">
+                    {line.map((c) => (
+                      <i className={'t-cube-c c' + c}></i>
+                    ))}
+                  </i>
+                ))}
+              </ins>
+            )}
+            {stackState &&
+              stackState.map((line) => (
+                <i className="t-stack-line">
+                  {line.map((c) => (
+                    <i className={'t-stack-c c' + c}></i>
+                  ))}
+                </i>
+              ))}
+          </div>
+        </div>
+        {/* <div className="t-info-wrapper">
+        <div className="t-info">
+          <h3>NEXT</h3>
+          <div className="t-info-box">
+            <ins className="t-cube">
+              {nextCubeState &&
+                nextCubeState.shape.map((line) => (
+                  <i className="t-cube-line">
+                    {line.map((c) => (
+                      <i className={'t-cube-c c' + c}></i>
+                    ))}
+                  </i>
+                ))}
+            </ins>
+          </div>
+          <h3>SCORE</h3>
+          <div className="t-info-box">
+            {info && (
+              <ul className="t-info-score">
+                <li>Lv{info.level}</li>
+                <li>
+                  <span className="v">{info.score}</span>
+                  <br />
+                  APM: {apm || 0}
+                </li>
+                <li>
+                  <br />
+                  Best
+                </li>
+                <li>
+                  <span className="v">{info.best.score || 0}</span>
+                  <br />
+                  APM: {info.best.apm || 0}
+                </li>
+              </ul>
+            )}
+          </div>
+        </div>
+      </div> */}
+
+        <div className="t-game-control">
+          <a
+            href="javascript:;"
+            className="t-start"
+            style={{ display: die ? 'block' : 'none' }}
+            onClick={start}
+          >
+            START
           </a>
-        )}
-        {/* <a href="javascript:;"
+          {/* {!die && (
+            <a href="javascript:;" className="t-pause" onClick={togglePause}>
+              {pause ? '>' : '||'}
+            </a>
+          )} */}
+          {/* <a href="javascript:;"
           className={"t-audio" + (this.state.audio ? "" : " disabled")}
           onClick={this.toggleAudio}>
           ♪
         </a> */}
-      </div>
-
-      {isMobile && (
-        <div className="t-cube-control" ref="cubeControl">
-          <a href="javascript:;" className="t-space" ref="space"></a>
-          <a href="javascript:;" className="t-up" ref="up"></a>
-          <a href="javascript:;" className="t-right" ref="right"></a>
-          <a href="javascript:;" className="t-down" ref="down"></a>
-          <a href="javascript:;" className="t-left" ref="left"></a>
         </div>
-      )}
+
+        {isMobile && (
+          <div className="t-cube-control" ref="cubeControl">
+            <a href="javascript:;" className="t-space" ref="space"></a>
+            <a href="javascript:;" className="t-up" ref="up"></a>
+            <a href="javascript:;" className="t-right" ref="right"></a>
+            <a href="javascript:;" className="t-down" ref="down"></a>
+            <a href="javascript:;" className="t-left" ref="left"></a>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
