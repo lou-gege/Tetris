@@ -9,7 +9,7 @@
 .tetris {
   padding-top: 10px;
   .clearfix();
-  width: @t-cube-w*12 + 108px;
+  width: @t-cube-w*12 + 40px;
   // width: 1200px;
   // height: ;
   margin: 0 auto;
@@ -32,9 +32,9 @@
 .t-stack-wrapper {
   display: table-cell;
   vertical-align: top;
-  border: solid 10px #2f676f;
+  border: solid 20px #2f676f;
   // border: solid 10px #000;
-  border-radius: 8px;
+  border-radius: 16px;
 }
 
 .t-stack {
@@ -62,7 +62,7 @@
   display: inline-block;
   width: ~'@{t-cube-w}px';
   height: ~'@{t-cube-h}px';
-  background-color: #666;
+  // background-color: #666;
   .cube(c1, #9bbb49, #D4E4B4, #627229, #394919, #BBD47A); //L
   .cube(c2, #10bdde, #94deef, #087384, #084252, #52cee6); //_|
   .cube(c3, #BD52D6, #DEB5EF, #733184, #422152, #CE84DE); //T
@@ -70,6 +70,11 @@
   .cube(c5, #42b542, #ADDEAD, #296b29, #194219, #73c573); //_-
   .cube(c6, #D64A4A, #EFADAD, #7b2929, #4a1919, #DE7B7B); //|
   .cube(c7, #EFCE52, #F7E6B5, #947b31, #5a4a21, #F7DE84); //::
+}
+
+.t-top {
+  width: 464px;
+  margin: 0 auto;
 }
 
 .t-info-wrapper {
@@ -81,23 +86,25 @@
   font-family: 'Consolas';
   color: #fff;
   text-align: center;
-  width: 100px;
+  width: 200px;
   background: @t-bg;
-  border: solid 10px #2f676f;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-  border-left: 0;
+  border: solid 16px #2f676f;
+  // border-top-right-radius: 16px;
+  // border-bottom-right-radius: 16px;
+  // border-left: 0;
+  border-radius: 16px;
+  margin: 16px;
   h3 {
     font-size: 26px;
     font-weight: 700;
     background-color: #2f676f;
-    text-shadow: 2px 0 0 #152f32, -2px 0 0 #152f32, 0 2px 0 #152f32,
-      0 -2px 0 #152f32;
+    // text-shadow: 2px 0 0 #152f32, -2px 0 0 #152f32, 0 2px 0 #152f32,
+    //   0 -2px 0 #152f32;
   }
 }
 
 .t-info-box {
-  height: 75px;
+  height: 200px;
   display: table;
   margin: 0 auto;
   .t-cube {
