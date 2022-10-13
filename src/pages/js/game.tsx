@@ -4,7 +4,8 @@ import { KEY, CUBE_W, CUBE_H } from './const';
 // import Audio from "audio";
 import Stack from './stack';
 import Cube from './cube';
-
+import { Spin } from 'antd';
+import { PlayCircleOutlined } from '@ant-design/icons';
 // import styles from '../css/app.less';
 import '../css/app.less';
 import { Col, Row } from 'antd';
@@ -39,12 +40,12 @@ const Game: React.FC = () => {
 
   const [die, setDie] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [cubeState, setCubeState] = useState(undefined);
-  const [nextCubeState, setNextCubeState] = useState(undefined);
-  const [stackState, setStackState] = useState(undefined);
-  const [info, setInfo] = useState(undefined);
-  const [apm, setApm] = useState(undefined);
-  const [pause, setPause] = useState(undefined);
+  const [cubeState, setCubeState] = useState<any>(undefined);
+  const [nextCubeState, setNextCubeState] = useState<any>(undefined);
+  const [stackState, setStackState] = useState<any>(undefined);
+  const [info, setInfo] = useState<any>(undefined);
+  const [apm, setApm] = useState<any>(undefined);
+  const [pause, setPause] = useState<any>(false);
 
   const [stack, setStack] = useState(new Stack());
   const [cube, setCube] = useState(new Cube(stack));
@@ -132,7 +133,7 @@ const Game: React.FC = () => {
     // });
   };
 
-  const handleAction = (e) => {
+  const handleAction = (e: any) => {
     console.log('handleAction e', e);
     switch (e.keyCode) {
       case KEY.LEFT:
@@ -212,11 +213,11 @@ const Game: React.FC = () => {
 
   var offsetX = 0,
     offsetY = 0,
-    transform = '';
+    transform: any = '';
   if (cubeState) {
     offsetX = cubeState.point[0] * CUBE_W;
     offsetY = cubeState.point[1] * CUBE_H;
-    var translate = 'translate3d(' + offsetX + 'px, ' + offsetY + 'px, 0)';
+    var translate: any = 'translate3d(' + offsetX + 'px, ' + offsetY + 'px, 0)';
     transform = {
       transform: translate,
       '-webkit-transform': translate,
@@ -310,27 +311,43 @@ const Game: React.FC = () => {
       </div> */}
 
           <div className="t-stack-wrapper">
-            <div className="t-stack">
-              {cubeState && (
-                <ins className="t-cube" style={transform}>
-                  {cubeState.shape.map((line) => (
-                    <i className="t-cube-line">
+            <Spin
+              spinning={pause}
+              indicator={
+                <div
+                  onClick={() => {
+                    togglePause();
+                  }}
+                  style={{ marginTop: 100, marginLeft: -30 }}
+                >
+                  <PlayCircleOutlined
+                    style={{ fontSize: 55, color: '#2f676f' }}
+                  />
+                </div>
+              }
+            >
+              <div className="t-stack">
+                {cubeState && (
+                  <ins className="t-cube" style={transform}>
+                    {cubeState.shape.map((line) => (
+                      <i className="t-cube-line">
+                        {line.map((c) => (
+                          <i className={'t-cube-c c' + c}></i>
+                        ))}
+                      </i>
+                    ))}
+                  </ins>
+                )}
+                {stackState &&
+                  stackState.map((line) => (
+                    <i className="t-stack-line">
                       {line.map((c) => (
-                        <i className={'t-cube-c c' + c}></i>
+                        <i className={'t-stack-c c' + c}></i>
                       ))}
                     </i>
                   ))}
-                </ins>
-              )}
-              {stackState &&
-                stackState.map((line) => (
-                  <i className="t-stack-line">
-                    {line.map((c) => (
-                      <i className={'t-stack-c c' + c}></i>
-                    ))}
-                  </i>
-                ))}
-            </div>
+              </div>
+            </Spin>
           </div>
           {/* <div className="t-info-wrapper">
         <div className="t-info">
