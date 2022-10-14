@@ -5,6 +5,8 @@
 @t-bg: #353535;
 @t-cube-w: 32;
 @t-cube-h: 32;
+@t-theme-col: rgb(137, 157, 192);
+@t-bg-col: rgb(188, 195, 207);
 
 .tetris {
   padding-top: 10px;
@@ -33,7 +35,7 @@
 .t-stack-wrapper {
   display: table-cell;
   vertical-align: top;
-  border: solid 20px #2f676f;
+  border: solid 20px @t-theme-col;
   // border: solid 10px #000;
   border-radius: 16px;
 }
@@ -89,7 +91,7 @@
   text-align: center;
   width: 200px;
   background: @t-bg;
-  border: solid 16px #2f676f;
+  border: solid 16px @t-theme-col;
   // border-top-right-radius: 16px;
   // border-bottom-right-radius: 16px;
   // border-left: 0;
@@ -99,7 +101,8 @@
   h3 {
     font-size: 26px;
     font-weight: 700;
-    background-color: #2f676f;
+    background-color: @t-theme-col;
+    color: #fff;
     // text-shadow: 2px 0 0 #152f32, -2px 0 0 #152f32, 0 2px 0 #152f32,
     //   0 -2px 0 #152f32;
   }
@@ -129,9 +132,9 @@
 .t-introduction-title {
   text-shadow: 2px 0 0 #152f32, -2px 0 0 #152f32, 0 2px 0 #152f32,
     0 -2px 0 #152f32;
-  background-color: #fff;
+  background-color: @t-bg-col;
   // border: solid 1px #afafaf;
-  color: #febf17;
+  color: #fead17;
   font-size: 32px;
   font-weight: 700;
   // text-align: center;
@@ -139,19 +142,19 @@
 }
 
 .t-introduction-body {
-  text-shadow: 1px 0 0 #152f32;
-  background-color: #fff;
+  text-shadow: 2px 0 0 #152f32;
+  background-color: @t-bg-col;
   // border: solid 1px #afafaf;
-  color: #febf17;
+  color: #fead17;
   font-size: 20px;
-  // font-weight: 700;
+  font-weight: bold;
   // text-align: center;
   list-style-type: disc;
 }
 
 .t-signature-title {
   text-shadow: 2px 0 0 #999, -2px 0 0 #999, 0 2px 0 #999, 0 -2px 0 #999;
-  background-color: #fff;
+  background-color: @t-bg-col;
   // border: solid 1px #afafaf;
   color: #ccc;
   font-size: 32px;
@@ -162,7 +165,7 @@
 
 .t-signature-body {
   // text-shadow: 1px 0 0 #152f32;
-  background-color: #fff;
+  background-color: @t-bg-col;
   // border: solid 1px #afafaf;
   color: #999;
   font-size: 20px;
