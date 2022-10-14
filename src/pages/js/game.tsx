@@ -38,25 +38,23 @@ const Game: React.FC = () => {
   };
 
   const handleAction = (e: any) => {
-    console.log('handleAction e', e);
     switch (e.keyCode) {
       case KEY.LEFT:
         cube.left();
-        //audio.playBtn();
         break;
       case KEY.RIGHT:
         cube.right();
-        //audio.playBtn();
         break;
       case KEY.UP:
         cube.spin();
-        //audio.playSpin();
         break;
       case KEY.DOWN:
         cube.fall();
         break;
       case KEY.PAUSE:
-        togglePause();
+        if (stack.status) {
+          togglePause();
+        }
         break;
       case KEY.SPACE:
         if (die) {
