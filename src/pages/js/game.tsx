@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import { KEY, CUBE_W, CUBE_H } from './const';
 import Stack from './stack';
 import Cube from './cube';
@@ -26,7 +25,6 @@ const Game: React.FC = () => {
   const updateCube = () => {
     setCubeState(cube.getCurrent());
     setNextCubeState(cube.getNext());
-    console.log('here is cubeState', cubeState);
   };
 
   const updateStack = () => {
@@ -101,7 +99,8 @@ const Game: React.FC = () => {
     var translate: any = 'translate3d(' + offsetX + 'px, ' + offsetY + 'px, 0)';
     transform = {
       transform: translate,
-      '-webkit-transform': translate,
+      // '-webkit-transform': translate,
+      WebkitTransform: translate,
     };
   }
 
@@ -114,9 +113,9 @@ const Game: React.FC = () => {
             <div className="t-info-box">
               <ins className="t-cube">
                 {nextCubeState &&
-                  nextCubeState.shape.map((line, index) => (
+                  nextCubeState.shape.map((line: any, index: number) => (
                     <i className="t-cube-line" key={index + 'cubeLine'}>
-                      {line.map((c, index) => (
+                      {line.map((c: any, index: number) => (
                         <i
                           className={'t-cube-c c' + c}
                           key={index + 'cubeC'}
@@ -172,9 +171,9 @@ const Game: React.FC = () => {
               <div className="t-stack">
                 {cubeState && (
                   <ins className="t-cube" style={transform}>
-                    {cubeState.shape.map((line, index) => (
+                    {cubeState.shape.map((line: any, index: number) => (
                       <i className="t-cube-line" key={'cubeLine' + index}>
-                        {line.map((c, index) => (
+                        {line.map((c: any, index: number) => (
                           <i
                             className={'t-cube-c c' + c}
                             key={'tCubeC' + index}
@@ -185,9 +184,9 @@ const Game: React.FC = () => {
                   </ins>
                 )}
                 {stackState &&
-                  stackState.map((line, index) => (
+                  stackState.map((line: any, index: number) => (
                     <i className="t-stack-line" key={'stackLine' + index}>
-                      {line.map((c, index) => (
+                      {line.map((c: any, index: number) => (
                         <i
                           className={'t-stack-c c' + c}
                           key={'stackC' + index}
@@ -201,7 +200,6 @@ const Game: React.FC = () => {
 
           <div className="t-game-control">
             <a
-              href="javascript:;"
               className="t-start"
               style={{ display: die ? 'block' : 'none' }}
               onClick={start}
@@ -209,16 +207,6 @@ const Game: React.FC = () => {
               START
             </a>
           </div>
-
-          {isMobile && (
-            <div className="t-cube-control" ref="cubeControl">
-              <a href="javascript:;" className="t-space" ref="space"></a>
-              <a href="javascript:;" className="t-up" ref="up"></a>
-              <a href="javascript:;" className="t-right" ref="right"></a>
-              <a href="javascript:;" className="t-down" ref="down"></a>
-              <a href="javascript:;" className="t-left" ref="left"></a>
-            </div>
-          )}
         </div>
       </Col>
       <Col span={8} pull={3}>
