@@ -26,6 +26,7 @@ const Game: React.FC = () => {
   const updateCube = () => {
     setCubeState(cube.getCurrent());
     setNextCubeState(cube.getNext());
+    console.log('here is cubeState', cubeState);
   };
 
   const updateStack = () => {
@@ -77,15 +78,10 @@ const Game: React.FC = () => {
     bindEvent();
     stack.onChange(updateStack);
     cube.onChange(updateCube);
-    //console.log('here is useEffect stack:',stack);
-
     updateStack();
   }, []);
 
   const start = () => {
-    console.log('here is game start cube:', cube);
-
-    console.log('here is game start stack:', stack);
     cube.clearApmRecord();
     stack.refresh().start();
     updateStack();
@@ -97,8 +93,6 @@ const Game: React.FC = () => {
     cube.toggleStatus();
     setPause(!cube.status);
   };
-  console.log('here is togglePause cube', cube);
-  console.log('here is togglePause cubeState', cubeState);
 
   var offsetX = 0,
     offsetY = 0,
@@ -122,10 +116,13 @@ const Game: React.FC = () => {
             <div className="t-info-box">
               <ins className="t-cube">
                 {nextCubeState &&
-                  nextCubeState.shape.map((line) => (
-                    <i className="t-cube-line">
-                      {line.map((c) => (
-                        <i className={'t-cube-c c' + c}></i>
+                  nextCubeState.shape.map((line, index) => (
+                    <i className="t-cube-line" key={index + 'cubeLine'}>
+                      {line.map((c, index) => (
+                        <i
+                          className={'t-cube-c c' + c}
+                          key={index + 'cubeC'}
+                        ></i>
                       ))}
                     </i>
                   ))}
@@ -177,20 +174,26 @@ const Game: React.FC = () => {
               <div className="t-stack">
                 {cubeState && (
                   <ins className="t-cube" style={transform}>
-                    {cubeState.shape.map((line) => (
-                      <i className="t-cube-line">
-                        {line.map((c) => (
-                          <i className={'t-cube-c c' + c}></i>
+                    {cubeState.shape.map((line, index) => (
+                      <i className="t-cube-line" key={'cubeLine' + index}>
+                        {line.map((c, index) => (
+                          <i
+                            className={'t-cube-c c' + c}
+                            key={'tCubeC' + index}
+                          ></i>
                         ))}
                       </i>
                     ))}
                   </ins>
                 )}
                 {stackState &&
-                  stackState.map((line) => (
-                    <i className="t-stack-line">
-                      {line.map((c) => (
-                        <i className={'t-stack-c c' + c}></i>
+                  stackState.map((line, index) => (
+                    <i className="t-stack-line" key={'stackLine' + index}>
+                      {line.map((c, index) => (
+                        <i
+                          className={'t-stack-c c' + c}
+                          key={'stackC' + index}
+                        ></i>
                       ))}
                     </i>
                   ))}

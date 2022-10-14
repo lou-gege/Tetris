@@ -1,4 +1,4 @@
-import { CUBES, CUBES_LENGTH, STACK_WIDTH, STACK_HEIGHT } from './const';
+import { CUBES, CUBES_LENGTH, STACK_WIDTH } from './const';
 
 var random = (max) => Math.floor(Math.random() * max);
 var getAllShape = (type) => CUBES[type];
@@ -50,7 +50,6 @@ class Cube {
   bottom() {
     if (!this.status) {
       return this;
-    } else {
     }
     var offSetY = this.stack.getBottomOffsetY(this.getCurrent());
     this._setPoint(0, offSetY).fall();
