@@ -4,10 +4,25 @@ import { KEY, CUBE_W, CUBE_H } from './const';
 // import Audio from "audio";
 import Stack from './stack';
 import Cube from './cube';
-
-import styles from '../css/app.less';
+import { Spin } from 'antd';
+import { PlayCircleOutlined } from '@ant-design/icons';
+// import styles from '../css/app.less';
+import '../css/app.less';
+import { Col, Row } from 'antd';
 
 var doc = document;
+
+let stackShouldUpdate = 0;
+let cubeShouldUpdate = 0;
+
+export const stackUpdate = () => {
+  console.log('hhh');
+  stackShouldUpdate++;
+  console.log('555');
+};
+export const cubeUpdate = () => {
+  cubeShouldUpdate++;
+};
 
 const Game: React.FC = () => {
   // getInitialState() {
@@ -20,20 +35,26 @@ const Game: React.FC = () => {
   //   };
   // }
 
-  let stack = new Stack();
-  let cube = new Cube(stack);
+  // let stack = new Stack();
+  // let cube = new Cube(stack);
 
-  // const[stack,setStack]=useState(new Stack());
-  // const[cube,setCube]=useState(new Cube(stack));
-
-  const [die, setDie] = useState(true);
+  const [die, setDie] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [cubeState, setCubeState] = useState<any>(undefined);
   const [nextCubeState, setNextCubeState] = useState<any>(undefined);
   const [stackState, setStackState] = useState<any>(undefined);
   const [info, setInfo] = useState<any>(undefined);
   const [apm, setApm] = useState<any>(undefined);
-  const [pause, setPause] = useState<any>(undefined);
+  const [pause, setPause] = useState<any>(false);
+
+  const [stack, setStack] = useState(new Stack());
+  const [cube, setCube] = useState(new Cube(stack));
+
+  console.log('stack', stack);
+  console.log('cube', cube);
+  console.log('stack.status', stack.status);
+  console.log('stackShouldUpdate', stackShouldUpdate);
+  console.log('cubeState', cubeState);
 
   // constructor() {
   //   super();
@@ -46,7 +67,32 @@ const Game: React.FC = () => {
   //   };
   // }
 
+  // useEffect(() => {
+  //   if (stackShouldUpdate) {
+  //     console.log('111');
+  //     updateStack();
+  //     console.log('222');
+  //   }
+  // }, [stackShouldUpdate]);
+
+  // useEffect(() => {
+  //   if (cubeShouldUpdate) {
+  //     // console.log('111');
+  //     updateCube();
+  //   }
+  // }, [cubeShouldUpdate]);
+
+  // useEffect(() => {
+  //   updateStack();
+  // }, [stack]);
+
+  // useEffect(() => {
+  //   updateCube();
+  // }, [cube]);
+
   const updateCube = () => {
+    console.log('updateCube', cube);
+
     setCubeState(cube.getCurrent());
     setNextCubeState(cube.getNext());
 
@@ -63,7 +109,7 @@ const Game: React.FC = () => {
     // console.log('this', this);
     // console.log('updateStack', arguments[0]);
 
-    let info = stack.getInfo();
+    let _info = stack.getInfo();
     // if (!this.state.die && !info.status) {
     //   //this.audio.stopBgm();
     //   //this.audio.playDie();
@@ -72,9 +118,13 @@ const Game: React.FC = () => {
     //   //this.audio.playDestroy();
     // }
     setStackState(stack.getCurrent());
-    setInfo(info);
-    setDie(!info.status);
+    setInfo(_info);
+    setDie(!_info.status);
     setApm(cube.getApm());
+
+    console.log('stack info', info);
+    console.log('updateStack info die', die);
+    console.log('!info.status', !_info.status);
 
     // this.setState({
     //   stack: this.stack.getCurrent(),
@@ -84,8 +134,9 @@ const Game: React.FC = () => {
     // });
   };
 
-  const handleAction = (action) => {
-    switch (action) {
+  const handleAction = (e: any) => {
+    console.log('handleAction e', e);
+    switch (e.keyCode) {
       case KEY.LEFT:
         cube.left();
         //audio.playBtn();
@@ -101,7 +152,12 @@ const Game: React.FC = () => {
       case KEY.DOWN:
         cube.fall();
         break;
+      case KEY.PAUSE:
+        togglePause();
+        break;
       case KEY.SPACE:
+        // console.log('KEY.SPACE die', die);
+
         if (die) {
           start();
         } else {
@@ -112,48 +168,14 @@ const Game: React.FC = () => {
     }
   };
 
-  // const bindEvent=()=> {
-  //   if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
-  //     setIsMobile(true);
-  //     // this.setState({ isMobile: true });
-  //     var shadow = (ele) => {
-  //       ele.classList.add('active');
-  //       setTimeout(() => ele.classList.remove('active'), 100);
-  //     };
-  //     setTimeout(() => {
-  //       FastClick.attach(this.refs.cubeControl);
-  //       this.refs.space.addEventListener('touchend', (e) => {
-  //         shadow(this.refs.space);
-  //         this.handleAction(KEY.SPACE);
-  //       });
-  //       this.refs.up.addEventListener('touchend', (e) => {
-  //         shadow(this.refs.up);
-  //         this.handleAction(KEY.UP);
-  //       });
-  //       this.refs.down.addEventListener('touchend', (e) => {
-  //         shadow(this.refs.down);
-  //         this.handleAction(KEY.DOWN);
-  //       });
-  //       this.refs.left.addEventListener('touchend', (e) => {
-  //         shadow(this.refs.left);
-  //         this.handleAction(KEY.LEFT);
-  //       });
-  //       this.refs.right.addEventListener('touchend', (e) => {
-  //         shadow(this.refs.right);
-  //         this.handleAction(KEY.RIGHT);
-  //       });
-  //     }, 500);
-  //   }
-
-  //   doc.addEventListener('keydown', (e) => {
-  //     this.handleAction(e.keyCode);
-  //   });
-  // }
+  const bindEvent = () => {
+    doc.addEventListener('keydown', (e) => {
+      handleAction(e);
+    });
+  };
 
   useEffect(() => {
-    // bindEvent();
-    //stack.callbacks.push(updateStack);
-    console.log('here is useEffect stack:', stack);
+    bindEvent();
     stack.onChange(updateStack);
     cube.onChange(updateCube);
     //console.log('here is useEffect stack:',stack);
@@ -182,6 +204,7 @@ const Game: React.FC = () => {
     cube.onChange(updateCube);
 
     stack.refresh().start();
+    updateStack();
     cube.create().start();
     updateStack();
   };
@@ -206,60 +229,81 @@ const Game: React.FC = () => {
   if (cubeState) {
     offsetX = cubeState.point[0] * CUBE_W;
     offsetY = cubeState.point[1] * CUBE_H;
-    var translate = 'translate3d(' + offsetX + 'px, ' + offsetY + 'px, 0)';
+    var translate: any = 'translate3d(' + offsetX + 'px, ' + offsetY + 'px, 0)';
     transform = {
       transform: translate,
       '-webkit-transform': translate,
     };
   }
+
   // console.log(this.state.info && this.state.info.best);
   return (
-    <div className={styles['tetris' + (die ? ' die' : '')]}>
-      <div className={styles['t-stack-wrapper']}>
-        <div className={styles['t-stack']}>
-          {cubeState ? (
-            <ins className={styles['t-cube']} style={transform}>
-              {cubeState.shape.map((line) => (
-                <i className={styles['t-cube-line']}>
-                  {line.map((c) => (
-                    <i className={styles['t-cube-c c' + c]}></i>
+    <Row>
+      <Col span={16} push={2}>
+        <div className="t-top">
+          <div className="t-info" style={{ display: 'inline-block' }}>
+            <h3>NEXT</h3>
+            <div className="t-info-box">
+              <ins className="t-cube">
+                {nextCubeState &&
+                  nextCubeState.shape.map((line) => (
+                    <i className="t-cube-line">
+                      {line.map((c) => (
+                        <i className={'t-cube-c c' + c}></i>
+                      ))}
+                    </i>
                   ))}
-                </i>
-              ))}
-            </ins>
-          ) : null}
-          {stackState &&
-            stackState.map((line) => (
-              <i className={styles['t-stack-line']}>
-                {line.map((c) => (
-                  <i className={styles['t-stack-c c' + c]}></i>
-                ))}
-              </i>
-            ))}
+              </ins>
+            </div>
+          </div>
+          <div className="t-info" style={{ display: 'inline-block' }}>
+            <h3>SCORE</h3>
+            <div className="t-info-box">
+              {info && (
+                <ul className="t-info-score">
+                  <li>Lv{info.level}</li>
+                  <li>
+                    <span className="v">{info.score}</span>
+                    <br />
+                    APM: {apm || 0}
+                  </li>
+                  <li>
+                    <br />
+                    Best
+                  </li>
+                  <li>
+                    <span className="v">{info.best.score || 0}</span>
+                    <br />
+                    APM: {info.best.apm || 0}
+                  </li>
+                </ul>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-      <div className={styles['t-info-wrapper']}>
-        <div className={styles['t-info']}>
+        <div className={'tetris' + (die ? ' die' : '')}>
+          {/* <div className="t-info-wrapper">
+        <div className="t-info">
           <h3>NEXT</h3>
-          <div className={styles['t-info-box']}>
-            <ins className={styles['t-cube']}>
+          <div className="t-info-box">
+            <ins className="t-cube">
               {nextCubeState &&
                 nextCubeState.shape.map((line) => (
-                  <i className={styles['t-cube-line']}>
+                  <i className="t-cube-line">
                     {line.map((c) => (
-                      <i className={styles['t-cube-c c' + c]}></i>
+                      <i className={'t-cube-c c' + c}></i>
                     ))}
                   </i>
                 ))}
             </ins>
           </div>
           <h3>SCORE</h3>
-          <div className={styles['t-info-box']}>
+          <div className="t-info-box">
             {info && (
-              <ul className={styles['t-info-score']}>
+              <ul className="t-info-score">
                 <li>Lv{info.level}</li>
                 <li>
-                  <span className={styles['v']}>{info.score}</span>
+                  <span className="v">{info.score}</span>
                   <br />
                   APM: {apm || 0}
                 </li>
@@ -268,7 +312,7 @@ const Game: React.FC = () => {
                   Best
                 </li>
                 <li>
-                  <span className={styles['v']}>{info.best.score || 0}</span>
+                  <span className="v">{info.best.score || 0}</span>
                   <br />
                   APM: {info.best.apm || 0}
                 </li>
@@ -276,38 +320,139 @@ const Game: React.FC = () => {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className={styles['t-game-control']}>
-        <a
-          className={styles['t-start']}
-          style={{ display: die ? 'block' : 'none' }}
-          onClick={start}
-        >
-          START
-        </a>
-        {!die && (
-          <a className={styles['t-pause']} onClick={() => togglePause()}>
-            {pause ? '>' : '||'}
-          </a>
-        )}
-        {/* <a href="javascript:;"
-             className={"t-audio" + (this.state.audio ? "" : " disabled")}
-             onClick={this.toggleAudio}>
-            ♪
-          </a> */}
-      </div>
-
-      {isMobile && (
-        <div className={styles['t-cube-control']} ref="cubeControl">
-          <a href="javascript:;" className={styles['t-space']} ref="space"></a>
-          <a href="javascript:;" className={styles['t-up']} ref="up"></a>
-          <a href="javascript:;" className={styles['t-right']} ref="right"></a>
-          <a href="javascript:;" className={styles['t-down']} ref="down"></a>
-          <a href="javascript:;" className={styles['t-left']} ref="left"></a>
+          <div className="t-stack-wrapper">
+            <Spin
+              spinning={pause}
+              indicator={
+                <div
+                  onClick={() => {
+                    togglePause();
+                  }}
+                  style={{ marginTop: 100, marginLeft: -30 }}
+                >
+                  <PlayCircleOutlined
+                    style={{ fontSize: 55, color: '#2f676f' }}
+                  />
+                </div>
+              }
+            >
+              <div className="t-stack">
+                {cubeState && (
+                  <ins className="t-cube" style={transform}>
+                    {cubeState.shape.map((line) => (
+                      <i className="t-cube-line">
+                        {line.map((c) => (
+                          <i className={'t-cube-c c' + c}></i>
+                        ))}
+                      </i>
+                    ))}
+                  </ins>
+                )}
+                {stackState &&
+                  stackState.map((line) => (
+                    <i className="t-stack-line">
+                      {line.map((c) => (
+                        <i className={'t-stack-c c' + c}></i>
+                      ))}
+                    </i>
+                  ))}
+              </div>
+            </Spin>
+          </div>
+          {/* <div className="t-info-wrapper">
+        <div className="t-info">
+          <h3>NEXT</h3>
+          <div className="t-info-box">
+            <ins className="t-cube">
+              {nextCubeState &&
+                nextCubeState.shape.map((line) => (
+                  <i className="t-cube-line">
+                    {line.map((c) => (
+                      <i className={'t-cube-c c' + c}></i>
+                    ))}
+                  </i>
+                ))}
+            </ins>
+          </div>
+          <h3>SCORE</h3>
+          <div className="t-info-box">
+            {info && (
+              <ul className="t-info-score">
+                <li>Lv{info.level}</li>
+                <li>
+                  <span className="v">{info.score}</span>
+                  <br />
+                  APM: {apm || 0}
+                </li>
+                <li>
+                  <br />
+                  Best
+                </li>
+                <li>
+                  <span className="v">{info.best.score || 0}</span>
+                  <br />
+                  APM: {info.best.apm || 0}
+                </li>
+              </ul>
+            )}
+          </div>
         </div>
-      )}
-    </div>
+      </div> */}
+
+          <div className="t-game-control">
+            <a
+              href="javascript:;"
+              className="t-start"
+              style={{ display: die ? 'block' : 'none' }}
+              onClick={start}
+            >
+              START
+            </a>
+            {/* {!die && (
+            <a href="javascript:;" className="t-pause" onClick={togglePause}>
+              {pause ? '>' : '||'}
+            </a>
+          )} */}
+            {/* <a href="javascript:;"
+          className={"t-audio" + (this.state.audio ? "" : " disabled")}
+          onClick={this.toggleAudio}>
+          ♪
+        </a> */}
+          </div>
+
+          {isMobile && (
+            <div className="t-cube-control" ref="cubeControl">
+              <a href="javascript:;" className="t-space" ref="space"></a>
+              <a href="javascript:;" className="t-up" ref="up"></a>
+              <a href="javascript:;" className="t-right" ref="right"></a>
+              <a href="javascript:;" className="t-down" ref="down"></a>
+              <a href="javascript:;" className="t-left" ref="left"></a>
+            </div>
+          )}
+        </div>
+      </Col>
+      <Col span={8} pull={3}>
+        <div style={{ height: 100 }} />
+        <div>
+          <div className="t-introduction-title">操作键说明：</div>
+          <ul className="t-introduction-body">
+            <li>P键：暂停/继续</li>
+            <li>左、右、下键：控制方向</li>
+            <li>上键：旋转方块</li>
+            <li>空格键：坠底</li>
+          </ul>
+        </div>
+        <div style={{ height: 500 }} />
+        <div>
+          <div className="t-signature-title">人民当家作组：</div>
+          <div className="t-signature-body">
+            黄瑞杰、王怡贤、许明远、朱景润、娄钰阁、赵志威
+          </div>
+        </div>
+      </Col>
+    </Row>
   );
 };
 
