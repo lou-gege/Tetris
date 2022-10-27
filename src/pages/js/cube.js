@@ -8,7 +8,7 @@ var getShape = (type, state) => {
 var getCenter = (cubeWidth) => Math.floor((STACK_WIDTH - cubeWidth) / 2);
 var getInitPoint = (type, state) => [
   getCenter(getShape(type, state).shape[0].length),
-  0,
+  -getShape(type, state).shape.length + 1,
 ];
 
 class Cube {
